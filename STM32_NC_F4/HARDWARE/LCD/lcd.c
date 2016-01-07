@@ -2815,6 +2815,22 @@ void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p)
 
 
 
+u16 Temp_X,Temp_Y; //窗口坐标平移
+//初始化显示数据，数据格式为5位的整形
+void LCD_UpdataShow( u32 x,u32 y,u32 x0,u32 y0,u32 xe,u32 ye,u32 g,u32 steps){
+	//LCD_ShowNum(u16 x,u16 y,u32 num,u8 len,u8 size);
+	
+	LCD_ShowNum(Temp_X+8*3, Temp_Y,x,6,16);
+	LCD_ShowNum(Temp_X+8*14, Temp_Y,y,6,16);
+		LCD_ShowNum(Temp_X+8*3, Temp_Y+16,x0,6,16);
+	LCD_ShowNum(Temp_X+8*14, Temp_Y+16,y0,6,16);
+		LCD_ShowNum(Temp_X+8*3, Temp_Y+16*2,xe,6,16);
+	LCD_ShowNum(Temp_X+8*14, Temp_Y+16*2,ye,6,16);
+		LCD_ShowNum(Temp_X+8*3, Temp_Y+16*3,g,3,16);
+	LCD_ShowNum(Temp_X+8*14, Temp_Y+16*3,steps,6,16);
+}
+
+
 
 
 

@@ -38,6 +38,9 @@ void mf_setlabel(u8 *path);
 void mf_gets(u16 size);
 u8 mf_putc(u8 c);
 u8 mf_puts(u8*c);
+
+FRESULT mf_select_file(char * filename,char * path,char offset);
+FRESULT mf_get_fileName(char * filename,char * path,char offset);
  
 #endif
 
