@@ -1,9 +1,9 @@
 ..\obj\exfuns.o: ..\FATFS\exfuns\exfuns.c
-..\obj\exfuns.o: D:\Keil_v5.11A\ARM\ARMCC\bin\..\include\string.h
+..\obj\exfuns.o: D:\Keil_v5\ARM\ARMCC\bin\..\include\string.h
 ..\obj\exfuns.o: ..\FATFS\exfuns\exfuns.h
 ..\obj\exfuns.o: ..\USER\stm32f10x.h
 ..\obj\exfuns.o: ..\CORE\core_cm3.h
-..\obj\exfuns.o: D:\Keil_v5.11A\ARM\ARMCC\bin\..\include\stdint.h
+..\obj\exfuns.o: D:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
 ..\obj\exfuns.o: ..\USER\system_stm32f10x.h
 ..\obj\exfuns.o: ..\USER\stm32f10x_conf.h
 ..\obj\exfuns.o: ..\STM32F10x_FWLib\inc\stm32f10x_exti.h
@@ -20,5 +20,5 @@
 ..\obj\exfuns.o: ..\FATFS\exfuns\fattester.h
 ..\obj\exfuns.o: ..\MALLOC\malloc.h
 ..\obj\exfuns.o: ..\SYSTEM\usart\usart.h
-..\obj\exfuns.o: D:\Keil_v5.11A\ARM\ARMCC\bin\..\include\stdio.h
+..\obj\exfuns.o: D:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
 ..\obj\exfuns.o: ..\SYSTEM\sys\sys.h

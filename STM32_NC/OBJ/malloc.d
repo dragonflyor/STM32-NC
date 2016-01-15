@@ -2,7 +2,7 @@
 ..\obj\malloc.o: ..\MALLOC\malloc.h
 ..\obj\malloc.o: ..\USER\stm32f10x.h
 ..\obj\malloc.o: ..\CORE\core_cm3.h
-..\obj\malloc.o: D:\Keil_v5.11A\ARM\ARMCC\bin\..\include\stdint.h
+..\obj\malloc.o: D:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
 ..\obj\malloc.o: ..\USER\system_stm32f10x.h
 ..\obj\malloc.o: ..\USER\stm32f10x_conf.h
 ..\obj\malloc.o: ..\STM32F10x_FWLib\inc\stm32f10x_exti.h

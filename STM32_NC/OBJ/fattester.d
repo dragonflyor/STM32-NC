@@ -2,7 +2,7 @@
 ..\obj\fattester.o: ..\FATFS\exfuns\fattester.h
 ..\obj\fattester.o: ..\USER\stm32f10x.h
 ..\obj\fattester.o: ..\CORE\core_cm3.h
-..\obj\fattester.o: D:\Keil_v5.11A\ARM\ARMCC\bin\..\include\stdint.h
+..\obj\fattester.o: D:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
 ..\obj\fattester.o: ..\USER\system_stm32f10x.h
 ..\obj\fattester.o: ..\USER\stm32f10x_conf.h
 ..\obj\fattester.o: ..\STM32F10x_FWLib\inc\stm32f10x_exti.h
@@ -21,7 +21,7 @@
 ..\obj\fattester.o: ..\USMART\usmart.h
 ..\obj\fattester.o: ..\USMART\usmart_str.h
 ..\obj\fattester.o: ..\SYSTEM\usart\usart.h
-..\obj\fattester.o: D:\Keil_v5.11A\ARM\ARMCC\bin\..\include\stdio.h
+..\obj\fattester.o: D:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
 ..\obj\fattester.o: ..\FATFS\exfuns\exfuns.h
 ..\obj\fattester.o: ..\MALLOC\malloc.h
-..\obj\fattester.o: D:\Keil_v5.11A\ARM\ARMCC\bin\..\include\string.h
+..\obj\fattester.o: D:\Keil_v5\ARM\ARMCC\bin\..\include\string.h

@@ -3,4 +3,4 @@
 ..\obj\ff.o: ..\FATFS\src\integer.h
 ..\obj\ff.o: ..\FATFS\src\ffconf.h
 ..\obj\ff.o: ..\FATFS\src\diskio.h
-..\obj\ff.o: D:\Keil_v5.11A\ARM\ARMCC\bin\..\include\stdarg.h
+..\obj\ff.o: D:\Keil_v5\ARM\ARMCC\bin\..\include\stdarg.h
