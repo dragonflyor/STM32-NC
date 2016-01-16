@@ -261,10 +261,15 @@ void com_task(void *p_arg)
 						//显示串口状态到屏幕
 						com_statusBar(conn_recv);
 						
-						if(conn_recv[0]=='>' && conn_recv[1]=='>')
+					//协议码>>01:接收文件
+						if(conn_recv[0]=='>' && conn_recv[1]=='>' && conn_recv[2]=='0' && conn_recv[3]=='1')
 						{
 								printf("收文件\r\n");
-								m_creatFile("0:/NCCODE/conndata.txt",10,200);
+								//接收文件
+								//第一个参数：保存在sd卡的地址
+								//第二个参数：连续轮询多次（100次），都没数据进来 ，则接收文件超时，超时时间T=100*200ms
+								//第三个参数：轮询周期
+								m_creatFile("0:/NCCODE/conndata.txt",100,200);
 								printf("结束收文件\r\n");
 						}
 

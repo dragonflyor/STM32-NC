@@ -82,8 +82,9 @@ void SDCard_Init(void)
 
 
 //串口接收数据保存在文件中
-//轮询timeout次还没数据读入就退出
-//cycletime 读文件时轮询扫描的周期 单位ms
+//第一个参数：保存在sd卡的地址
+//第二个参数：连续轮询timeout次都没数据进来 ，则接收文件超时，超时时间T=timeout*cycletime (ms)
+//第三个参数：轮询周期 单位 ms
 void m_creatFile(char * pathname ,int timeout,u16 cycletime)
 {
 		u8 t=0;	
@@ -122,14 +123,13 @@ void m_creatFile(char * pathname ,int timeout,u16 cycletime)
 						
 						//取串口的数据 
 						mymemcpy(conn_recv, USART_RX_BUF,len);
-				
-
 
 						//显示到屏幕
 						com_statusBar(conn_recv);
 					
-						//发送$$开始的字符串表示文件接收完成
-						if(conn_recv[0]=='$'&&conn_recv[1]=='$')
+						//协议码$$01：结束文件接收
+						//发送$$01开始的字符串表示文件接收完成
+						if(conn_recv[0]=='$' && conn_recv[1]=='$' && conn_recv[2]=='0' && conn_recv[3]=='1')
 						{
 								//关闭文件
 								mf_close();
@@ -137,7 +137,7 @@ void m_creatFile(char * pathname ,int timeout,u16 cycletime)
 								myfree(SRAMIN,conn_recv); 
 								//状态复位
 								USART_RX_STA=0;
-								//break;
+							//接收完成程序退出
 								return ;
 						}
 						//状态复位
@@ -157,6 +157,7 @@ void m_creatFile(char * pathname ,int timeout,u16 cycletime)
 				t++; 
 				//超时退出
 				if(t == timeout){
+					printf("文件接收超时 \r\n");
 					return;
 				}
 				//串口轮询时间与等于200ms
