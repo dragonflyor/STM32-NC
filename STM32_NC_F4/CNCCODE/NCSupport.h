@@ -11,6 +11,7 @@
 	#include "getAlineCodeFromSDtxt.h"
 	
 	
+	#define KEY_NULL 0
 	
 	#define INTERVAL 5  //LCD»æÍ¼µÄµ¥Î»
 	

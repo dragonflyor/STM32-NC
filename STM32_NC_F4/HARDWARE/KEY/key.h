@@ -35,7 +35,7 @@
 #define KEY2_PRES	3
 #define WKUP_PRES   4
 
-#define KEY_NULL 0
+//#define KEY_NULL 0
 
 void KEY_Init(void);	//IO初始化
 u8 KEY_Scan(u8);  		//按键扫描函数	
