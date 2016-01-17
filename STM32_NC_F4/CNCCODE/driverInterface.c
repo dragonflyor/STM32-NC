@@ -334,6 +334,39 @@ if(displayRate==(1*ZOOM)){ displayRate=0;
 	}
 }
 
+//刷新实时坐标
+void LCD_updateCurrentPosition(NC_Para *pNC_Para)
+{
+		int k[2]={1,1};//LCD正负号处理系数
+		int x=pNC_Para->coor_currentValue[0],y=pNC_Para->coor_currentValue[1];//坐标值转换为整数显示
+			//实时坐标显示
+ 	if(x<0)
+ 	{ 
+ 		k[0]=-1;
+ 				LCD_ShowChar(Temp_X+8*3,Temp_Y,'-',16,0);//显示负号
+ 	}
+ 	else
+ 	{
+ 		k[0]=1;
+ 		LCD_ShowChar(Temp_X+8*3,Temp_Y,' ',16,0);//不显示负号
+ 	}
+ 		if(y<0)
+ 	{ 
+ 		k[1]=-1;
+ 				LCD_ShowChar(Temp_X+8*3+8*11,Temp_Y,'-',16,0);//显示负号
+ 	}
+ 		else
+ 	{
+ 		k[1]=1;
+ 		LCD_ShowChar(Temp_X+8*3+8*11,Temp_Y,' ',16,0);//不显示负号
+ 	}
+ 		
+ 	//刷新坐标x y	
+ 	LCD_ShowNum(Temp_X+8*4, Temp_Y,x*k[0],5,16);
+ 	LCD_ShowNum(Temp_X+8*15, Temp_Y,y*k[1],5,16);
+ 	LCD_ShowNum(Temp_X+8*14, Temp_Y+16*3,pNC_Para->steps,6,16);
+}
+
 
 void LCD_ShowFrame1(void){
 	//设置窗口颜色
@@ -445,6 +478,10 @@ void TIM3_IRQHandler( void ){
 		//显示到LCD,使用显示会拖延时间
 		//显示模式1，只有实时变量刷新
 		updataShow(pNC_Para,1);
+		
+		//只刷新实时坐标
+		//LCD_updateCurrentPosition(pNC_Para);
+		
 		
 		if(pNC_Para->steps>0)
 		{
