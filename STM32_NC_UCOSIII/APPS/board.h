@@ -17,6 +17,8 @@
 	#include "ff.h"  
 	#include "exfuns.h"  
 	#include "fattester.h" 
+	
+	#include "NCSupport.h"
 
 	
 
