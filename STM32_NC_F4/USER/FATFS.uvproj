@@ -610,11 +610,6 @@
           <GroupName>CNCODE</GroupName>
           <Files>
             <File>
-              <FileName>CNCCODE.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\CNCCODE\CNCCODE.c</FilePath>
-            </File>
-            <File>
               <FileName>driverInterface.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\CNCCODE\driverInterface.c</FilePath>
@@ -623,6 +618,11 @@
               <FileName>interpolation.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\CNCCODE\interpolation.c</FilePath>
+            </File>
+            <File>
+              <FileName>NCSupport.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CNCCODE\NCSupport.c</FilePath>
             </File>
           </Files>
         </Group>

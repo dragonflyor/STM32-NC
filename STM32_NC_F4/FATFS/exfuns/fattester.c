@@ -6,6 +6,8 @@
 #include "malloc.h"		  
 #include "ff.h"
 #include "string.h"
+
+
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32F407开发板
@@ -328,137 +330,137 @@ u8 mf_puts(u8*c)
 
 
 
-//////////////////////////////////////////////////////////////////////////
-//BY XZ 20150428
-//////////////////////////////////////////////////////////////////////////
-//选择文件
-//path:路径
-//offset 首个文件向下偏移offset个
-//返回值:执行结果
-FRESULT mf_select_file(char * filename,char * path,char offset)
-{
-	FRESULT res;	  
-    char *fn;   /* This function is assuming non-Unicode cfg. */
-	//FILINFO fileinfoTemp;	//头文件信息临时变量
-#if S_MAX_SIZ
-	fileinfo.fsize = S_MAX_SIZ * 2 + 1;
-	fileinfo.fname ;
-#endif		  
-	
-    res = f_opendir(&dir,(const char*)path); //打开一个目录
+////////////////////////////////////////////////////////////////////////////
+////BY XZ 20150428
+////////////////////////////////////////////////////////////////////////////
+////选择文件
+////path:路径
+////offset 首个文件向下偏移offset个
+////返回值:执行结果
+//FRESULT mf_select_file(char * filename,char * path,char offset)
+//{
+//	FRESULT res;	  
+//    char *fn;   /* This function is assuming non-Unicode cfg. */
+//	//FILINFO fileinfoTemp;	//头文件信息临时变量
+//#if S_MAX_SIZ
+//	fileinfo.fsize = S_MAX_SIZ * 2 + 1;
+//	fileinfo.fname ;
+//#endif		  
+//	
+//   res = f_opendir(&dir,(const char*)path); //打开一个目录
 
-// 	if (f_readdir(&dir, &fileinfoTemp)!=FR_OK)                 //读取目录下的一个文件)
-// 	{
-// 		printf("\n文件错误\n");
-// 	}
-    if (res == FR_OK) 
-	{	
-		printf("\r\n"); 
-		while(offset--)
-		{
-			res = f_readdir(&dir, &fileinfo);                   //读取目录下的一个文件
-			if (res != FR_OK || fileinfo.fname[0] == 0) 
-			{ 
-				res = f_opendir(&dir,(const char*)path); //打开一个目录
-				if (res == FR_OK) offset++;continue;
-				//printf("文件末尾");
-				//break; 
-			}//错误了/到末尾了,退出
-			
-			//if (fileinfo.fname[0] == '.') continue;             //忽略上级目录
-#if S_MAX_SIZ
-			fn = *fileinfo.fname ? fileinfo.fname : fileinfo.fname;
-#else							   
-			fn = fileinfo.fname;
-#endif	                                              /* It is a file. */
+//// 	if (f_readdir(&dir, &fileinfoTemp)!=FR_OK)                 //读取目录下的一个文件)
+//// 	{
+//// 		printf("\n文件错误\n");
+//// 	}
+//    if (res == FR_OK) 
+//	{	
+//		printf("\r\n"); 
+//		while(offset--)
+//		{
+//			res = f_readdir(&dir, &fileinfo);                   //读取目录下的一个文件
+//			if (res != FR_OK || fileinfo.fname[0] == 0) 
+//			{ 
+//				res = f_opendir(&dir,(const char*)path); //打开一个目录
+//				if (res == FR_OK) offset++;continue;
+//				//printf("文件末尾");
+//				//break; 
+//			}//错误了/到末尾了,退出
+//			
+//			//if (fileinfo.fname[0] == '.') continue;             //忽略上级目录
+//#if S_MAX_SIZ
+//			fn = *fileinfo.fname ? fileinfo.fname : fileinfo.fname;
+//#else							   
+//			fn = fileinfo.fname;
+//#endif	                                              /* It is a file. */
 
-		} 
-		//printf("%s/", path);//打印路径	
-		//	printf("%s\n",  fn);//打印文件名	
-				if(*fn!='\0')
-		{
-				printf("%s\n",  fn);//打印文件名
-			strcpy(filename,fn);//输出文件
-		}
-		else
-		{
-			//	strcpy(filename,"is null");
-			*filename='\0';
-		}
-    }	  
-	//	myfree(fileinfo.lfname);
-    return res;	  
-}
+//		} 
+//		//printf("%s/", path);//打印路径	
+//		//	printf("%s\n",  fn);//打印文件名	
+//				if(*fn!='\0')
+//		{
+//				printf("%s\n",  fn);//打印文件名
+//			strcpy(filename,fn);//输出文件
+//		}
+//		else
+//		{
+//			//	strcpy(filename,"is null");
+//			*filename='\0';
+//		}
+//    }	  
+//	//	myfree(fileinfo.lfname);
+//    return res;	  
+//}
 
 
-//////////////////////////////////////////////////////////////////////////
-//BY XZ 20150428
-//////////////////////////////////////////////////////////////////////////
-//得到目录首地址向下偏移位置的文件名
-//path:路径
-//offset 首个文件向下偏移offset个
-//返回值:执行结果
-FRESULT mf_get_fileName(char * filename,char * path,char offset)
-{
-	FRESULT res;	  
-    char *fn;   /* This function is assuming non-Unicode cfg. */
-	//FILINFO fileinfoTemp;	//头文件信息临时变量
-#if S_MAX_SIZ
-	fileinfo.fsize = S_MAX_SIZ * 2 + 1;
-	fileinfo.fname ;
-#endif		  
-	
-    res = f_opendir(&dir,(const char*)path); //打开一个目录
-	
-	// 	if (f_readdir(&dir, &fileinfoTemp)!=FR_OK)                 //读取目录下的一个文件)
-	// 	{
-	// 		printf("\n文件错误\n");
-	// 	}
-    if (res == FR_OK) 
-	{	
-		//printf("\r\n"); 
-		while(offset--)
-		{
-			res = f_readdir(&dir, &fileinfo);                   //读取目录下的一个文件
-			if (res != FR_OK || fileinfo.fname[0] == 0) //没有正确读取到文件，错误或者到了结尾
-			{ 
-				//res = f_opendir(&dir,(const char*)path); //到了结尾，再次打开这个目录开始位置
-				//if (res == FR_OK) offset++;continue;//重新向下进行一次读取
-				if (res != FR_OK )
-				{
-				//	printf("\n读取错误\n");
-				}
-				else
-				{
-				//	printf("\n文件末尾\n");
-				}
-				break; 
-			}//错误了/到末尾了
-			
-			//if (fileinfo.fname[0] == '.') continue;             //忽略上级目录
-#if S_MAX_SIZ
-			fn = *fileinfo.fname ? fileinfo.fname : fileinfo.fname;
-#else							   
-			fn = fileinfo.fname;
-#endif	                                              /* It is a file. */
-			
-		} 
-	
-		if(*fn!='\0')
-		{
-		//	printf("%s\n",  fn);//打印文件名
-			strcpy(filename,fn);
-		}
-		else
-		{
+////////////////////////////////////////////////////////////////////////////
+////BY XZ 20150428
+////////////////////////////////////////////////////////////////////////////
+////得到目录首地址向下偏移位置的文件名
+////path:路径
+////offset 首个文件向下偏移offset个
+////返回值:执行结果
+//FRESULT mf_get_fileName(char * filename,char * path,char offset)
+//{
+//	FRESULT res;	  
+//    char *fn;   /* This function is assuming non-Unicode cfg. */
+//	//FILINFO fileinfoTemp;	//头文件信息临时变量
+//#if S_MAX_SIZ
+//	fileinfo.fsize = S_MAX_SIZ * 2 + 1;
+//	fileinfo.fname ;
+//#endif		  
+//	
+//    res = f_opendir(&dir,(const char*)path); //打开一个目录
+//	
+//	// 	if (f_readdir(&dir, &fileinfoTemp)!=FR_OK)                 //读取目录下的一个文件)
+//	// 	{
+//	// 		printf("\n文件错误\n");
+//	// 	}
+//    if (res == FR_OK) 
+//	{	
+//		//printf("\r\n"); 
+//		while(offset--)
+//		{
+//			res = f_readdir(&dir, &fileinfo);                   //读取目录下的一个文件
+//			if (res != FR_OK || fileinfo.fname[0] == 0) //没有正确读取到文件，错误或者到了结尾
+//			{ 
+//				//res = f_opendir(&dir,(const char*)path); //到了结尾，再次打开这个目录开始位置
+//				//if (res == FR_OK) offset++;continue;//重新向下进行一次读取
+//				if (res != FR_OK )
+//				{
+//				//	printf("\n读取错误\n");
+//				}
+//				else
+//				{
+//				//	printf("\n文件末尾\n");
+//				}
+//				break; 
+//			}//错误了/到末尾了
+//			
+//			//if (fileinfo.fname[0] == '.') continue;             //忽略上级目录
+//#if S_MAX_SIZ
+//			fn = *fileinfo.fname ? fileinfo.fname : fileinfo.fname;
+//#else							   
+//			fn = fileinfo.fname;
+//#endif	                                              /* It is a file. */
+//			
+//		} 
+//	
+//		if(*fn!='\0')
+//		{
+//		//	printf("%s\n",  fn);//打印文件名
+//			strcpy(filename,fn);
+//		}
+//		else
+//		{
 
-			*filename='\0';
-		}
+//			*filename='\0';
+//		}
 
-    }	  
+//    }	  
 
-    return res;	  
-}
+//    return res;	  
+//}
 
 
 
