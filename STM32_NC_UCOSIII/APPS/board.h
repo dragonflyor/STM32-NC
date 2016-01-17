@@ -6,6 +6,7 @@
 	#include "usart.h"
 	#include "led.h"
 	#include "lcd.h"
+	#include "beep.h"
 	#include "APPS.h"
 	
 	#include "key.h"  

@@ -18,4 +18,60 @@ STM32 NC
 	LCD_Fill(lcddev.width-19,lcddev.height-39,lcddev.width,lcddev.height-21,lcd_discolor[13-com_num%2]); //填充状态信号
 	
 ###3.超时后，文件接受终止
-	本次接收的文件将丢弃 不会保存在本地
+本次接收的文件将丢弃 不会保存在本地
+
+	void m_creatFile(char * pathname ,int timeout,u16 cycletime)
+	{
+		……
+		while(1)
+		{
+			……
+			//超时退出
+			if(t == timeout){
+				printf("文件接收超时 \r\n");
+				return;
+			}
+			//串口轮询时间与等于200ms
+			delay_ms(cycletime);		 			   
+			LED0=!LED0;
+		} 
+	}
+
+###4.ucosIII中任务的删除
+	while(1)
+	{
+		task1_num++;	//任务执1行次数加1 注意task1_num1加到255的时候会清零！！
+		LED0= ~LED0;
+		printf("任务1已经执行：%d次\r\n",task1_num);
+		if(task1_num==5) 
+		{
+			OSTaskDel((OS_TCB*)&Task2_TaskTCB,&err);	//任务1执行5此后删除掉任务2
+			printf("任务1删除了任务2!\r\n");
+		}
+		LCD_Fill(6,131,114,313,lcd_discolor[task1_num%14]); //填充区域
+		LCD_ShowxNum(86,111,task1_num,3,16,0x80);	//显示任务执行次数
+		OSTimeDlyHMSM(0,0,1,0,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
+		
+	}
+
+###4.ucosIII中任务的挂起和恢复
+	while(1)
+	{
+		task1_num++;	//任务1执行次数加1 注意task1_num1加到255的时候会清零！！
+		LED0= ~LED0;
+		printf("任务1已经执行：%d次\r\n",task1_num);
+		if(task1_num==5) 
+		{
+			OSTaskSuspend((OS_TCB*)&Task2_TaskTCB,&err);//任务1执行5次后挂起任务2
+			printf("任务1挂起了任务2!\r\n");
+		}
+		if(task1_num==10) 
+		{
+			OSTaskResume((OS_TCB*)&Task2_TaskTCB,&err);	//任务1运行10次后恢复任务2
+			printf("任务1恢复了任务2!\r\n");
+		}
+		LCD_Fill(6,131,114,313,lcd_discolor[task1_num%14]); //填充区域
+		LCD_ShowxNum(86,111,task1_num,3,16,0x80);	//显示任务执行次数
+		OSTimeDlyHMSM(0,0,1,0,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
+		
+	}

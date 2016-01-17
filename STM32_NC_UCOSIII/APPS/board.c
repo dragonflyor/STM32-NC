@@ -17,6 +17,7 @@ void borad_HarwareInit(void)
 		
 		LED_Init();         //LED初始化	
 		LCD_Init();			//LCD初始化	
+		KEY_Init();
 		
 		POINT_COLOR = RED;
 		LCD_ShowString(30,10,200,16,16,"HardWare: STM32F4");	
