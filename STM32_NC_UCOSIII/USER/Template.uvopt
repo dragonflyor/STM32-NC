@@ -492,7 +492,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>78</TopLine>
+      <TopLine>1</TopLine>
       <CurrentLine>89</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\FWLIB\STM32F4xx_StdPeriph_Driver\src\misc.c</PathWithFileName>
@@ -1528,7 +1528,7 @@
 
   <Group>
     <GroupName>NCCODE</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1536,12 +1536,12 @@
       <GroupNumber>15</GroupNumber>
       <FileNumber>75</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>518</TopLine>
+      <CurrentLine>531</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\CNCCODE\driverInterface.c</PathWithFileName>
       <FilenameWithoutPath>driverInterface.c</FilenameWithoutPath>
@@ -1600,12 +1600,12 @@
       <GroupNumber>15</GroupNumber>
       <FileNumber>79</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>32</ColumnNumber>
+      <ColumnNumber>1</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>21</CurrentLine>
+      <TopLine>77</TopLine>
+      <CurrentLine>60</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\CNCCODE\AppInterface.c</PathWithFileName>
       <FilenameWithoutPath>AppInterface.c</FilenameWithoutPath>

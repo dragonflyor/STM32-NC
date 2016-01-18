@@ -5,6 +5,8 @@
 #include "lcd.h"
 #include "usart.h"
 #include "led.h"
+#include "malloc.h"
+#include "string.h"
 
 //调试选择 1驱动使用串口输出调试 0不使用
 #define USE_DRIVER_DEBUG (0)
@@ -288,6 +290,8 @@ if(displayRate==(1*ZOOM)){ displayRate=0;
  		k[1]=1;
  		LCD_ShowChar(Temp_X+8*3+8*11,Temp_Y,' ',16,0);//不显示负号
  	}
+	//实际坐标发送到串口
+	printfPosition(x,y,0);
  		
  	//刷新坐标x y	
  	LCD_ShowNum(Temp_X+8*4, Temp_Y,x*k[0],5,16);
@@ -523,6 +527,20 @@ void TIM3_IRQHandler( void ){
 		
 	}
 }
+
+//串口发送实时坐标数据
+//协议码：>>10#X#Y#Z
+//数据包以#号隔开
+
+void printfPosition(int x,int y,int z)
+{
+		char * msg = (char *)malloc(40);
+		mymemset(msg,0,strlen(msg));
+		sprintf(msg,">>10#%d#%d#%d",x,y,0);
+		printf("position:%s \r\n",msg);
+		free(msg);
+}
+
 
 
 
