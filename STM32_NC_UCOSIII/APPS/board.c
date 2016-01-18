@@ -182,3 +182,11 @@ void com_statusBar(char * comdata){
 	LCD_Fill(lcddev.width-19,lcddev.height-39,lcddev.width,lcddev.height-21,lcd_discolor[10-rec_count%2]); //填充状态信号
 }
 
+/*
+*通过软件复位系统
+*
+*/
+void SystemReset(void)
+{
+		SCB->AIRCR = AIRCR_VECTKEY_MASK | SYSRESETREQ_MASK;
+}

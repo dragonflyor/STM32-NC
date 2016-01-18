@@ -393,6 +393,7 @@ FRESULT getFile(FIL * outFile,char *filename)
 //执行传入的文件
 void nc_excuteFile(FIL *m_file )
 {
+		str=mymalloc(SRAMIN,96);
 		pcode=mymalloc(SRAMIN,96);//动态分配空间
 		printf("\r\n-----------------EXpalianation  Begined!!!----------------------\r\n\r\n");		
 		

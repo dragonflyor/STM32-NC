@@ -76,5 +76,26 @@ STM32 NC
 		
 	}
 
-####
-usemcroLIb程序就无法进入ucos系统
+#### 5.进不了系统
+use mcroLIb程序就无法进入ucos系统，mcrolib是不在操作系统下运行的库
+
+	解决的代码如下: 
+	//不使用半主机模式
+	#if 1 //如果没有这段，则需要在target选项中选择使用USE microLIB
+	#pragma import(__use_no_semihosting)    //注释本行, 方法1
+	struct __FILE {
+	int handle;
+	};
+	FILE __stdout;
+	
+	_sys_exit(int x)
+	{
+	x = x;
+	}
+	
+	//__use_no_semihosting was requested, but _ttywrch was referenced, 增加如下函数, 方法2
+	_ttywrch(int ch)
+	{
+	ch = ch;
+	}
+	#endif

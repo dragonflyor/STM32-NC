@@ -174,20 +174,20 @@ void start_task(void *p_arg)
 //									 (OS_ERR 	* )&err);			
 
 					 
-		//创建TASK2任务
-		OSTaskCreate((OS_TCB 	* )&Task2_TaskTCB,		
-					 (CPU_CHAR	* )"task2 task", 		
-									 (OS_TASK_PTR )task2_task, 			
-									 (void		* )0,					
-									 (OS_PRIO	  )TASK2_TASK_PRIO,     	
-									 (CPU_STK   * )&TASK2_TASK_STK[0],	
-									 (CPU_STK_SIZE)TASK2_STK_SIZE/10,	
-									 (CPU_STK_SIZE)TASK2_STK_SIZE,		
-									 (OS_MSG_QTY  )0,					
-									 (OS_TICK	  )0,					
-									 (void   	* )0,				
-									 (OS_OPT      )OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR, 
-									 (OS_ERR 	* )&err);			 
+//		//创建TASK2任务
+//		OSTaskCreate((OS_TCB 	* )&Task2_TaskTCB,		
+//					 (CPU_CHAR	* )"task2 task", 		
+//									 (OS_TASK_PTR )task2_task, 			
+//									 (void		* )0,					
+//									 (OS_PRIO	  )TASK2_TASK_PRIO,     	
+//									 (CPU_STK   * )&TASK2_TASK_STK[0],	
+//									 (CPU_STK_SIZE)TASK2_STK_SIZE/10,	
+//									 (CPU_STK_SIZE)TASK2_STK_SIZE,		
+//									 (OS_MSG_QTY  )0,					
+//									 (OS_TICK	  )0,					
+//									 (void   	* )0,				
+//									 (OS_OPT      )OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR, 
+//									 (OS_ERR 	* )&err);			 
 		
 
 /*******************************
@@ -238,59 +238,50 @@ void task1_task(void *p_arg)
 		LCD_DrawLine(5,130,115,130);		//画线
 		POINT_COLOR = BLUE;
 		LCD_ShowString(6,111,110,16,16,"Task1 Run:000");
+	
+		LCD_DrawRectangle(5,lcddev.height-80,115,lcddev.height-40); 	//画一个矩形	
+		LCD_DrawLine(5,lcddev.height-60,115,lcddev.height-60);		//画线
+		POINT_COLOR = BLUE;
+		LCD_ShowString(6,lcddev.height-79,110,16,16,"Task1 Run:000");
+	
+	
 		OS_CRITICAL_EXIT();
 		while(1)
 		{
+				int key ;
 				task1_num++;	//任务执1行次数加1 注意task1_num1加到255的时候会清零！！
 				LED0= ~LED0;
 				printf("任务1已经执行：%d次\r\n",task1_num);
-				if(task1_num==5) 
-				{
-						//OSTaskDel((OS_TCB*)&Task2_TaskTCB,&err);	//任务1执行5此后删除掉任务2
-						printf("任务1删除了任务2!\r\n");
-				}
-				LCD_Fill(6,131,114,313,lcd_discolor[task1_num%14]); //填充区域
-				LCD_ShowxNum(86,111,task1_num,3,16,0x80);	//显示任务执行次数
-				OSTimeDlyHMSM(0,0,1,0,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
+
+				LCD_Fill(6,lcddev.height-59,114,lcddev.height-41,lcd_discolor[task1_num%14]); //填充区域
+				LCD_ShowxNum(86,lcddev.height-79,task1_num,3,16,0x80);	//显示任务执行次数
 				
+	
 				//开始执行数控代码
 				IS_InKEYUI = 0;
 				{
-//					int key ;
-//					
-//					OSTaskDel((OS_TCB*)&Key_TaskTCB,&err);	
-//			
-//					while(key!=KEY0_PRES){
-//						key = KEY_Scan(0);
-//						OSTimeDlyHMSM(0,0,0,20,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
-//					}
-//										//挂起按键任务main_task
-//					OSTaskSuspend((OS_TCB*)&task2_task,&err);//任务1执行5次后挂起任务2
-//					OSTaskSuspend((OS_TCB*)&main_task,&err);//任务1执行5次后挂起任务2
-//					printf("任务1挂起了task2_task !\r\n");
-//					printf("get key is:--->%d!\r\n",key-1);
-//					
-//					while(key != KEY1_PRES){
-//							//重新打开按键
-//					key = KEY_Scan(0);
-//						//break;
-//					}
-//					OSTaskResume((OS_TCB*)&task2_task,&err);	//任务1运行10次后恢复任务2
-//					OSTaskResume((OS_TCB*)&main_task,&err);	//任务1运行10次后恢复任务2
-//					OSTimeDlyHMSM(0,0,0,20,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
-//					
-//					printf("任务1恢复了任务2!\r\n");
-//					printf("get key is:--->%d!\r\n",key-1);
 					OS_CRITICAL_ENTER();
 					exec_manualSelectFile();
+					
+					//按了向上的键则返回菜单
+					key = KEY_Scan(0);
+					while(key != WKUP_PRES)
+					{
+						key = KEY_Scan(0);
+					}
+					//系统复位
+					SystemReset();
+					
 					OS_CRITICAL_EXIT();
-					OSTimeDlyHMSM(0,0,0,20,OS_OPT_TIME_HMSM_STRICT,&err); //延时20ms
-
+			
 				}
 				
+				//清空屏幕显示主菜单
 				LCD_Fill(0,0,lcddev.width,lcddev.height*1/2,BACK_COLOR);
 				IS_InKEYUI = 0;//回到主菜单页面
-				OSTaskDel((OS_TCB*)0,&err);	//删除start_task任务自身		
+				OSTaskDel((OS_TCB*)0,&err);	//删除start_task任务自身	
+				
+				OSTimeDlyHMSM(0,0,1,0,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
 		}
 }
 
@@ -348,11 +339,12 @@ void main_task(void *p_arg)
 			//如果正在操作住界面，显示菜单
 			if(IS_InKEYUI)
 			{
-						LCD_ShowString(30,10,400,16,16,"KEY0:manual select file and run.");	
-						LCD_ShowString(30,30,400,16,16,"KEY1:srialport select file and run.");
-						LCD_ShowString(30,50,400,16,16,"-------------------------------------");
-						LCD_ShowString(30,70,400,16,16,"HuBei University of Technology");
-						LCD_ShowString(30,90,400,16,16,"STM32_NC");
+						LCD_ShowString(30,10,400,16,16,"---------------MENU------------------");	
+						LCD_ShowString(30,30,400,16,16,">>>1.KEY0:manual select file and run.");	
+						LCD_ShowString(30,50,400,16,16,">>>1.KEY1:srialport select file and run.");
+						LCD_ShowString(30,70,400,16,16,"-------------------------------------");
+						LCD_ShowString(30,90,400,16,16,"HuBei University of Technology");
+						LCD_ShowString(30,110,400,16,16,"STM32_NC    ");
 			}
 		}
 		OSTimeDlyHMSM(0,0,0,10,OS_OPT_TIME_PERIODIC,&err);   //延时10ms

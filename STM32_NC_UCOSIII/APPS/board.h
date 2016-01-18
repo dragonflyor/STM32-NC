@@ -22,7 +22,8 @@
 	#include "NCSupport.h"
 	#include "APPInterface.h"
 
-	
+		#define AIRCR_VECTKEY_MASK    ((uint32_t)0x05FA0000)
+		#define SYSRESETREQ_MASK (2<<1)
 
 	void borad_HarwareInit(void);
 	
@@ -32,5 +33,7 @@
 	void m_creatFile(char * pathname ,int timeout,u16 cycletime);
 	//´®¿Ú×´Ì¬Ìõ
 	void com_statusBar(char * comdata);
+	
+	void SystemReset(void);
 
 #endif

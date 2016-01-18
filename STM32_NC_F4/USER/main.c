@@ -54,7 +54,7 @@ int main(void)
 	
 	printf("start \r\n");
 	
-	str=mymalloc(SRAMIN,96);
+	
 	fliename =mymalloc(SRAMIN,20);//动态分配空间
 	memset(fliename,'\0',strlen(fliename));
 	//带UI的文件选择
@@ -67,6 +67,7 @@ int main(void)
 	getFile(&readFile,fliename);
 	myfree(SRAMIN,fliename);
 
+	
 	//带UI的执行文件
 	nc_excuteFile(&readFile);
 	
