@@ -28,7 +28,7 @@ int main(void)
 	//M4+
 	my_mem_init(SRAMIN);
 	
-	str=mymalloc(SRAMIN,96);
+
 
 //	driver_GPIOInit1( );
 //	axisToZero1( );//回零
@@ -54,6 +54,7 @@ int main(void)
 	
 	printf("start \r\n");
 	
+	str=mymalloc(SRAMIN,96);
 	fliename =mymalloc(SRAMIN,20);//动态分配空间
 	memset(fliename,'\0',strlen(fliename));
 	//带UI的文件选择

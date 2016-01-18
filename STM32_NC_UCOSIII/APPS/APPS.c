@@ -256,31 +256,34 @@ void task1_task(void *p_arg)
 				//开始执行数控代码
 				IS_InKEYUI = 0;
 				{
-					int key ;
-					
-					OSTaskDel((OS_TCB*)&Key_TaskTCB,&err);	
-			
-					while(key!=KEY0_PRES){
-						key = KEY_Scan(0);
-						OSTimeDlyHMSM(0,0,0,20,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
-					}
-										//挂起按键任务main_task
-					OSTaskSuspend((OS_TCB*)&task2_task,&err);//任务1执行5次后挂起任务2
-					OSTaskSuspend((OS_TCB*)&main_task,&err);//任务1执行5次后挂起任务2
-					printf("任务1挂起了task2_task !\r\n");
-					printf("get key is:--->%d!\r\n",key-1);
-					
-					while(key != KEY1_PRES){
-							//重新打开按键
-					key = KEY_Scan(0);
-						//break;
-					}
-					OSTaskResume((OS_TCB*)&task2_task,&err);	//任务1运行10次后恢复任务2
-					OSTaskResume((OS_TCB*)&main_task,&err);	//任务1运行10次后恢复任务2
-					OSTimeDlyHMSM(0,0,0,20,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
-					
-					printf("任务1恢复了任务2!\r\n");
-					printf("get key is:--->%d!\r\n",key-1);
+//					int key ;
+//					
+//					OSTaskDel((OS_TCB*)&Key_TaskTCB,&err);	
+//			
+//					while(key!=KEY0_PRES){
+//						key = KEY_Scan(0);
+//						OSTimeDlyHMSM(0,0,0,20,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
+//					}
+//										//挂起按键任务main_task
+//					OSTaskSuspend((OS_TCB*)&task2_task,&err);//任务1执行5次后挂起任务2
+//					OSTaskSuspend((OS_TCB*)&main_task,&err);//任务1执行5次后挂起任务2
+//					printf("任务1挂起了task2_task !\r\n");
+//					printf("get key is:--->%d!\r\n",key-1);
+//					
+//					while(key != KEY1_PRES){
+//							//重新打开按键
+//					key = KEY_Scan(0);
+//						//break;
+//					}
+//					OSTaskResume((OS_TCB*)&task2_task,&err);	//任务1运行10次后恢复任务2
+//					OSTaskResume((OS_TCB*)&main_task,&err);	//任务1运行10次后恢复任务2
+//					OSTimeDlyHMSM(0,0,0,20,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
+//					
+//					printf("任务1恢复了任务2!\r\n");
+//					printf("get key is:--->%d!\r\n",key-1);
+
+					exec_manualSelectFile();
+
 				}
 				
 				LCD_Fill(0,0,lcddev.width,lcddev.height*1/2,BACK_COLOR);
@@ -510,6 +513,7 @@ void com_task(void *p_arg)
 			
 		}
 }
+
 
 
 

@@ -17,6 +17,7 @@
 
 
 
+
 //是否通过串口输出一些主函数执行信息   1：是  0：否
 #define USE_MAIN_DEBUG (0)
 
@@ -27,6 +28,12 @@ u16 Temp_X,Temp_Y; //窗口坐标平移
 GCode_Msg * pGCode_Msg;
 NC_Para * pNC_Para;
 char* pcode;	//取一行的指针
+
+//加入以下代码,支持UCOS,而不需要选择use MicroLIB	 
+_ttywrch(int ch)
+{
+ch = ch;
+}
 
 //初始化显示数据，数据格式为5位的整形
 void LCD_UpdataShow( u32 x,u32 y,u32 x0,u32 y0,u32 xe,u32 ye,u32 g,u32 steps){

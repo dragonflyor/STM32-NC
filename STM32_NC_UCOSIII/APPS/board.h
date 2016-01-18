@@ -20,6 +20,7 @@
 	#include "fattester.h" 
 	
 	#include "NCSupport.h"
+	#include "APPInterface.h"
 
 	
 

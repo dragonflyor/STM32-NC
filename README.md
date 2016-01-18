@@ -75,3 +75,6 @@ STM32 NC
 		OSTimeDlyHMSM(0,0,1,0,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
 		
 	}
+
+####
+usemcroLIb程序就无法进入ucos系统
