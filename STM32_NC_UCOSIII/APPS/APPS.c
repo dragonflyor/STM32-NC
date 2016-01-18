@@ -281,8 +281,10 @@ void task1_task(void *p_arg)
 //					
 //					printf("任务1恢复了任务2!\r\n");
 //					printf("get key is:--->%d!\r\n",key-1);
-
+					OS_CRITICAL_ENTER();
 					exec_manualSelectFile();
+					OS_CRITICAL_EXIT();
+					OSTimeDlyHMSM(0,0,0,20,OS_OPT_TIME_HMSM_STRICT,&err); //延时20ms
 
 				}
 				
