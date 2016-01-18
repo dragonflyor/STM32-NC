@@ -11,6 +11,25 @@ STM32 NC
  		">>02+filename"->收文件->执行文件
  	$$01:文件传输结束
 
+#####1.2 发送给上位机的协议码：
+
+	>>10#X#Y#Z：信息头为>>10,坐标信息用#号隔开
+	
+---
+	//串口发送实时坐标数据
+	//协议码：>>10#X#Y#Z
+	//数据包以#号隔开
+	void printfPosition(int x,int y,int z)
+	{
+			char * msg = (char *)malloc(40);
+			mymemset(msg,0,strlen(msg));
+			sprintf(msg,">>10#%d#%d#%d",x,y,0);
+			printf("position:%s \r\n",msg);
+			free(msg);
+	}
+
+
+
 ###2.串口状态条尾部状态信号
 
 	//状态条尾部蓝绿色闪烁：表示系统串口任务正在接收数据
