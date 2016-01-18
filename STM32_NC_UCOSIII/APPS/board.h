@@ -29,8 +29,10 @@
 	
 	//SD检测等
 	void SDCard_Init(void);
-	//串口接收数据保存在SD卡
+	//串口接收数据保存在SD卡,pathname为绝对全路径0:/NCCODE/XXX
 	void m_creatFile(char * pathname ,int timeout,u16 cycletime);
+	//串口接收文件，SD卡在目录的默认位置/NCCODE下保存文件,文件名通过参数传入
+	void m_createFileDef(char * filename,int timeout,u16 cycletime);
 	//串口状态条
 	void com_statusBar(char * comdata);
 	

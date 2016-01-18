@@ -82,7 +82,7 @@ void SDCard_Init(void)
 }
 
 
-//串口接收数据保存在文件中
+//串口接收数据保存在文件中,结束完成命令为"$$01"
 //第一个参数：保存在sd卡的地址
 //第二个参数：连续轮询timeout次都没数据进来 ，则接收文件超时，超时时间T=timeout*cycletime (ms)
 //第三个参数：轮询周期 单位 ms
@@ -166,6 +166,23 @@ void m_creatFile(char * pathname ,int timeout,u16 cycletime)
 				LED0=!LED0;
 		} 
 }
+
+//串口接收文件，SD卡在目录的默认位置/NCCODE下保存文件,文件名通过参数传入
+
+void m_createFileDef(char * filename,int timeout,u16 cycletime)
+{
+		char *default_dir="0:/NCCODE";	//默认的初始文件目录
+		char dirtemp[30];//目录暂时存放
+		printf("%s----------",dirtemp);	//调试时显示在串口
+		strcpy(dirtemp,default_dir);
+		strcat(dirtemp,"/");//得到绝对路径名称
+		strcat(dirtemp,filename);
+		printf("%s----------",dirtemp);
+		m_creatFile(dirtemp,timeout,cycletime);
+}
+
+
+
 
 //显示串口收到的数据
 //comdata:要显示的数据

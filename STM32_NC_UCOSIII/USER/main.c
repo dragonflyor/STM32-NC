@@ -5,7 +5,6 @@
 //Ö÷º¯Êý
 int main(void)
 {
-
 	OS_ERR err;
 	CPU_SR_ALLOC();
 	

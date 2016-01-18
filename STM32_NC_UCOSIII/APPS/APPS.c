@@ -259,22 +259,21 @@ void task1_task(void *p_arg)
 	
 				//开始执行数控代码
 				IS_InKEYUI = 0;
+				
+				OS_CRITICAL_ENTER();
+				exec_manualSelectFile();
+				
+				//按了向上的键则返回菜单
+				key = KEY_Scan(0);
+				while(key != WKUP_PRES)
 				{
-					OS_CRITICAL_ENTER();
-					exec_manualSelectFile();
-					
-					//按了向上的键则返回菜单
 					key = KEY_Scan(0);
-					while(key != WKUP_PRES)
-					{
-						key = KEY_Scan(0);
-					}
-					//系统复位
-					SystemReset();
-					
-					OS_CRITICAL_EXIT();
-			
 				}
+				//系统复位
+				SystemReset();
+				
+				OS_CRITICAL_EXIT();
+
 				
 				//清空屏幕显示主菜单
 				LCD_Fill(0,0,lcddev.width,lcddev.height*1/2,BACK_COLOR);
@@ -289,25 +288,51 @@ void task1_task(void *p_arg)
 //task2任务函数
 void task2_task(void *p_arg)
 {
-		u8 task2_num=0;
+	//	u8 task2_num=0;
 		OS_ERR err;
 		CPU_SR_ALLOC();
 		p_arg = p_arg;
 		
 		POINT_COLOR = BLACK;
 		OS_CRITICAL_ENTER();
-		LCD_DrawRectangle(125,110,234,314); //画一个矩形	
-		LCD_DrawLine(125,130,234,130);		//画线
-		POINT_COLOR = BLUE;
-		LCD_ShowString(126,111,110,16,16,"Task2 Run:000");
+//		LCD_DrawRectangle(125,110,234,314); //画一个矩形	
+//		LCD_DrawLine(125,130,234,130);		//画线
+//		POINT_COLOR = BLUE;
+//		LCD_ShowString(126,111,110,16,16,"Task2 Run:000");
 		OS_CRITICAL_EXIT();
 		while(1)
 		{
-				task2_num++;	//任务2执行次数加1 注意task1_num2加到255的时候会清零！！
-				LED1=~LED1;
-				printf("任务2已经执行：%d次\r\n",task2_num);
-				LCD_ShowxNum(206,111,task2_num,3,16,0x80);  //显示任务执行次数
-				LCD_Fill(126,131,233,313,lcd_discolor[13-task2_num%14]); //填充区域
+			int key = 0;
+//				task2_num++;	//任务2执行次数加1 注意task1_num2加到255的时候会清零！！
+//				LED1=~LED1;
+//				printf("任务2已经执行：%d次\r\n",task2_num);
+//				LCD_ShowxNum(206,111,task2_num,3,16,0x80);  //显示任务执行次数
+//				LCD_Fill(126,131,233,313,lcd_discolor[13-task2_num%14]); //填充区域
+			
+							//开始执行数控代码
+				IS_InKEYUI = 0;
+				
+				OS_CRITICAL_ENTER();
+				exec_byFilename("NCTST.txt");
+				
+				//按了向上的键则返回菜单
+				key = KEY_Scan(0);
+				while(key != WKUP_PRES)
+				{
+					key = KEY_Scan(0);
+				}
+				//系统复位
+				SystemReset();
+				
+				OS_CRITICAL_EXIT();
+
+				
+				//清空屏幕显示主菜单
+				LCD_Fill(0,0,lcddev.width,lcddev.height*1/2,BACK_COLOR);
+				IS_InKEYUI = 0;//回到主菜单页面
+				OSTaskDel((OS_TCB*)0,&err);	//删除start_task任务自身	
+			
+			
 				OSTimeDlyHMSM(0,0,1,0,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
 		}
 }
@@ -412,6 +437,22 @@ void Keyprocess_task(void *p_arg)
 							break;
 						case KEY1_PRES :
 							printf("KEY1_PRES pressed!\r\n");
+								//-----------------------------------
+									//		//创建TASK1任务
+						OSTaskCreate((OS_TCB 	* )&Task2_TaskTCB,		
+									 (CPU_CHAR	* )"Task2 task", 		
+													 (OS_TASK_PTR )task2_task, 			
+													 (void		* )0,					
+													 (OS_PRIO	  )TASK2_TASK_PRIO,     
+													 (CPU_STK   * )&TASK2_TASK_STK[0],	
+													 (CPU_STK_SIZE)TASK2_STK_SIZE/10,	
+													 (CPU_STK_SIZE)TASK2_STK_SIZE,		
+													 (OS_MSG_QTY  )0,					
+													 (OS_TICK	  )0,					
+													 (void   	* )0,					
+													 (OS_OPT      )OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR,
+													 (OS_ERR 	* )&err);			
+								//-----------------------------------						
 							break;
 						case KEY2_PRES :
 							printf("KEY2_PRES pressed!\r\n");
@@ -423,7 +464,7 @@ void Keyprocess_task(void *p_arg)
 						default:
 							//printf("nokey pressed!\r\n");
 							break;
-		}
+				}
 		}
 	}
 }
@@ -466,47 +507,13 @@ void com_task(void *p_arg)
 				LCD_Fill(lcddev.width-19,lcddev.height-39,lcddev.width,lcddev.height-21,lcd_discolor[13-com_num%2]); //填充状态信号
 	
 				//-----------------------------------------------------------------------
-				//成功接收到数据
-				if(USART_RX_STA&0x8000)
-				{
-						//接收到的数据长度
-						int len=USART_RX_STA&0x3fff;
-						char * conn_recv;
-
-						//开辟内存
-						conn_recv = (char*)mymalloc(SRAMIN,len+1);
-						mymemset(conn_recv,0,len+1);	//设置内存
-						
-						//取串口的数据 
-						mymemcpy(conn_recv, USART_RX_BUF,len);
-						
-						//状态复位
-						USART_RX_STA=0;
-						
-						//显示串口状态到屏幕
-						com_statusBar(conn_recv);
-						
-					//协议码>>01:接收文件
-						if(conn_recv[0]=='>' && conn_recv[1]=='>' && conn_recv[2]=='0' && conn_recv[3]=='1')
-						{
-								printf("收文件\r\n");
-								//接收文件
-								//第一个参数：保存在sd卡的地址
-								//第二个参数：连续轮询多次（100次），都没数据进来 ，则接收文件超时，超时时间T=100*200ms
-								//第三个参数：轮询周期
-								m_creatFile("0:/NCCODE/conndata.txt",100,200);
-								printf("结束收文件\r\n");
-						}
-
-						//释放内存
-						myfree(SRAMIN,conn_recv); 	
-				}
+				com_Process();
 				//-----------------------------------------------------------------------
-				//OSTimeDlyHMSM(0,0,0,500,OS_OPT_TIME_PERIODIC,&err); //延时1s
 				OSTimeDlyHMSM(0,0,0,500,OS_OPT_TIME_HMSM_STRICT,&err); //延时500ms
 			
 		}
 }
+
 
 
 
