@@ -402,6 +402,13 @@ void nc_excuteFile(FIL *m_file )
 		
 		while(((pcode=getALineCode(m_file))!=NULL))
 		{ 
+			//发送当前执行的行
+//			char * cmdstr = mymalloc(SRAMIN,100);
+//			mymemset(cmdstr,0,100);
+//			sprintf(cmdstr,"CL12%s",pcode);
+//			printf("%s",cmdstr);
+//			delay_ms(10);
+//			myfree(SRAMIN,cmdstr);
 #if USE_MAIN_DEBUG
 			printf("获取代码:%s\r\n",pcode);
 

@@ -294,12 +294,12 @@ void task2_task(void *p_arg)
 		p_arg = p_arg;
 		
 		POINT_COLOR = BLACK;
-		OS_CRITICAL_ENTER();
+//		OS_CRITICAL_ENTER();
 //		LCD_DrawRectangle(125,110,234,314); //画一个矩形	
 //		LCD_DrawLine(125,130,234,130);		//画线
 //		POINT_COLOR = BLUE;
 //		LCD_ShowString(126,111,110,16,16,"Task2 Run:000");
-		OS_CRITICAL_EXIT();
+//		OS_CRITICAL_EXIT();
 		while(1)
 		{
 			int key = 0;

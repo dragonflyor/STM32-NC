@@ -11,6 +11,6 @@ void tim_Init(uint16_t  TIM_Peri,uint16_t  TIM_Pres );
 	void run_neg1(u8 jj);
 	void run_pos1(u8 ii);
 	
-	void printfPosition(int x,int y,int z);
+	void printfPosition(int x,int y,int z,int t,int f,int s);
 
 #endif

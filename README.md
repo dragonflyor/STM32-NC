@@ -14,19 +14,25 @@ STM32 NC
 #####1.2 发送给上位机的协议码：
 
 	>>10#X#Y#Z：信息头为>>10,坐标信息用#号隔开
+	>>11+当前行G代码：发送当前行G代码
 	
 ---
 	//串口发送实时坐标数据
-	//协议码：>>10#X#Y#Z
+	//协议码：>>10#X#Y#Z#T#F#S
 	//数据包以#号隔开
-	void printfPosition(int x,int y,int z)
+	
+	void printfPosition(int x,int y,int z,int t,int f,int s)
 	{
 			char * msg = (char *)malloc(40);
 			mymemset(msg,0,strlen(msg));
-			sprintf(msg,">>10#%d#%d#%d",x,y,0);
-			printf("position:%s \r\n",msg);
+			sprintf(msg,">>10#%d#%d#%d#%d#%d#%d",x,y,z,t,f,s);
+			//printf("position:%s \r\n",msg);
+		
+			printf("%s \r\n",msg);
+			delay_ms(10);
 			free(msg);
 	}
+
 
 
 

@@ -291,7 +291,7 @@ if(displayRate==(1*ZOOM)){ displayRate=0;
  		LCD_ShowChar(Temp_X+8*3+8*11,Temp_Y,' ',16,0);//不显示负号
  	}
 	//实际坐标发送到串口
-	printfPosition(x,y,0);
+	printfPosition(x,y,0,1,0,500);
  		
  	//刷新坐标x y	
  	LCD_ShowNum(Temp_X+8*4, Temp_Y,x*k[0],5,16);
@@ -529,15 +529,18 @@ void TIM3_IRQHandler( void ){
 }
 
 //串口发送实时坐标数据
-//协议码：>>10#X#Y#Z
+//协议码：>>10#X#Y#Z#T#F#S
 //数据包以#号隔开
 
-void printfPosition(int x,int y,int z)
+void printfPosition(int x,int y,int z,int t,int f,int s)
 {
 		char * msg = (char *)malloc(40);
 		mymemset(msg,0,strlen(msg));
-		sprintf(msg,">>10#%d#%d#%d",x,y,0);
-		printf("position:%s \r\n",msg);
+		sprintf(msg,">>10#%d#%d#%d#%d#%d#%d",x,y,z,t,f,s);
+		//printf("position:%s \r\n",msg);
+	
+		printf("%s \r\n",msg);
+		delay_ms(10);
 		free(msg);
 }
 
